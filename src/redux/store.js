@@ -33,8 +33,19 @@ function* getPlantsSaga(action){
   }
 }
 
+function* postPlantSaga(action){
+  try{
+    const newPlant=yield axios.post('/api/plants', action.payload);
+    yield put({type: 'GET_PLANTS'});
+  }
+  catch(err){
+    console.log('Error:', err);
+  }
+}
+
 function* watcherSaga(){
   yield takeEvery('GET_PLANTS', getPlantsSaga);
+  yield takeEvery('NEW_PLANT', postPlantSaga);
 }
 
 // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
