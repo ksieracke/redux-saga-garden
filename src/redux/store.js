@@ -43,9 +43,20 @@ function* postPlantSaga(action){
   }
 }
 
+function* deletePlantSaga(action){
+  try{
+    const removedPlant= yield axios.delete(`/api/plants/${action.payload}`);
+    yield put({type:'GET_PLANTS'});
+  }
+  catch(err){
+    console.log(err);
+  }
+}
+
 function* watcherSaga(){
   yield takeEvery('GET_PLANTS', getPlantsSaga);
   yield takeEvery('NEW_PLANT', postPlantSaga);
+  yield takeEvery('DELETE_PLANT', deletePlantSaga);
 }
 
 // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
